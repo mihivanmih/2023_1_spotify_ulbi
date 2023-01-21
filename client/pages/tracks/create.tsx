@@ -1,12 +1,12 @@
 import React from 'react';
 import MainLayout from "@/layouts/MainLayout";
 
-const Index = () => {
+const Create = () => {
     return (
         <MainLayout>
-            Список треков
+            <h1>Загрузка трека</h1>
         </MainLayout>
     );
 };
 
-export default Index;
+export default Create;
