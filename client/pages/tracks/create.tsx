@@ -3,6 +3,9 @@ import MainLayout from "@/layouts/MainLayout";
 import StepWrapper from "@/components/StepWrapper";
 import {Button, Grid, TextField} from "@mui/material";
 import FileUpload from "@/components/FileUpload";
+import {useInput} from "@/hooks/useInput";
+import axios from "axios";
+import {useRouter} from "next/router";
 
 const Create = () => {
 
@@ -10,9 +13,28 @@ const Create = () => {
     const [picture, setPicture] = useState(null)
     const [audio, setAudio] = useState(null)
 
+    const name = useInput('')
+    const artist = useInput('')
+    const text = useInput('')
+
+    const router = useRouter()
+
     const next = () => {
         if(activeStep !== 2){
             setActiveStep(prev => prev + 1)
+        } else {
+           const formData = new FormData()
+           formData.append( 'name', name.value)
+           formData.append( 'text', text.value)
+           formData.append( 'artist', artist.value)
+           formData.append( 'picture', picture)
+           formData.append( 'audio', audio)
+            axios.post('http://localhost:5000/tracks', formData)
+                .then(resp => router.push('/tracks'))
+                .catch(e => {
+                    console.log("error", e)
+                    console.log("formData", formData)
+                })
         }
     }
 
@@ -25,15 +47,16 @@ const Create = () => {
             <StepWrapper activeStep={activeStep}>
                 {activeStep === 0 &&
                     <Grid container direction={'column'} style={{padding: '20px'}}>
-                        <TextField  label={"Название трека"} style={{ marginTop: "10px"}}/>
-                        <TextField  label={"Имя исполнителя"} style={{ marginTop: "10px"}}/>
-                        <TextField  label={"Слова к треку"} multiline rows={3} style={{ marginTop: "10px"}}/>
+                        <TextField  label={"Название трека"} style={{ marginTop: "10px"}} {...name} />
+                        <TextField  label={"Имя исполнителя"} style={{ marginTop: "10px"}} {...artist} />
+                        <TextField  label={"Слова к треку"} multiline rows={3} style={{ marginTop: "10px"}} {...text} />
                     </Grid>
                 }
                 {activeStep === 1 &&
                     <FileUpload  setFile={setPicture} accept={"image/*"}>
                         <Button>Загрузить обложку</Button>
                     </FileUpload>
+
                 }
                 {activeStep === 2 &&
                     <FileUpload  setFile={setAudio} accept={"audio/*"}>

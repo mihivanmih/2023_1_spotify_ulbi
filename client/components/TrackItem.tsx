@@ -31,7 +31,7 @@ const TrackItem: React.FC<TrackItemProps> = ({track, active = false}) => {
                         : <Pause />
                 }
             </IconButton>
-            <img src={track.picture} style={{ width: '70px', height: '70px'}} alt=""/>
+            <img src={'http://localhost:5000/' + track.picture} style={{ width: '70px', height: '70px'}} alt=""/>
             <Grid container direction={'column'} style={{ width: '200px', margin: '0 20px'}}>
                 <div>{track.name}</div>
                 <div style={{ fontSize: '12px', color: 'gray'}}>{track.artist}</div>

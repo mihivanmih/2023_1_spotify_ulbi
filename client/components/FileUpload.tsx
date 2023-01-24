@@ -10,7 +10,7 @@ const FileUpload: React.FC<FileUploadProps> = ({setFile, accept, children}) => {
     const ref = useRef<HTMLInputElement>()
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFile(e.target.files)
+        setFile(e.target.files[0])
     }
 
     return (

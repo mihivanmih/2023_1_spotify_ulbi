@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 import { playerReduser } from './playerReduser'
 import { HYDRATE } from 'next-redux-wrapper'
+import { trackReducer } from '@/store/reducers/trackReducer'
 
 const rootReducer = combineReducers({
-    player: playerReduser
+    player: playerReduser,
+    track: trackReducer
 })
 
 //export type RootState = ReturnType<typeof rootReducer>
